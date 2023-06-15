@@ -18,7 +18,7 @@ export function createCharacterCard(characters) {
     </dl>
   </div>
 </li>`;
-  const main = document.querySelector('[data-js="main"]');
-  main.append(newCard);
-  //activateButtons();
+  return newCard;
+  // const main = document.querySelector('[data-js="main"]');
+  // main.append(newCard);
 }

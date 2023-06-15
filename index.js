@@ -1,5 +1,5 @@
 import { createCharacterCard } from "./components/card/card.js";
-// const cardContainer = document.querySelector('[data-js="card-container"]');
+const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
@@ -9,18 +9,55 @@ const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 // States
-const maxPage = 1;
-const page = 1;
-const searchQuery = "";
+
+let maxPage;
+let page = 1;
+let searchQuery = "";
 //new code
-async function fetchCharacters() {
-  const response = await fetch("https://rickandmortyapi.com/api/character");
-  const result = await response.json();
-  const info = result.info;
-  const characters = result.results;
-  // console.log(characters);
-  characters.forEach((character) => {
-    createCharacterCard(character);
-  });
+
+nextButton.addEventListener("click", () => {
+  if (page < maxPage) {
+    page++;
+    fetchCharacters(page);
+
+    pagination.textContent = `${page} / ${maxPage} `;
+  }
+});
+prevButton.addEventListener("click", () => {
+  if (page > 1) {
+    page--;
+    fetchCharacters(page);
+    pagination.textContent = `${page} / ${maxPage} `;
+  }
+});
+
+fetchCharacters(page);
+async function fetchCharacters(page) {
+  try {
+    cardContainer.textContent = "";
+    let response = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`
+    );
+
+    console.log(response);
+    console.log(page);
+    let result = await response.json();
+    let info = result.info;
+    let characters = result.results;
+    maxPage = info.pages;
+    characters.forEach((character) => {
+      const newCard = createCharacterCard(character);
+      cardContainer.append(newCard);
+    });
+  } catch (error) {
+    console.error("Error fetching Data", error);
+  }
 }
-fetchCharacters();
+///////
+searchBar.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formElements = e.target.elements;
+  searchQuery = formElements[0].value;
+  fetchCharacters(searchQuery);
+});
