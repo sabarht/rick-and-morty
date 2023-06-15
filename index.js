@@ -11,7 +11,9 @@ const pagination = document.querySelector('[data-js="pagination"]');
 // States
 const maxPage = 1;
 const page = 1;
-const searchQuery = "";
+export const searchQuery = document.querySelector(
+  '[aria-label="character name"]'
+);
 //new code
 async function fetchCharacters() {
   const response = await fetch("https://rickandmortyapi.com/api/character");
@@ -24,3 +26,13 @@ async function fetchCharacters() {
   });
 }
 fetchCharacters();
+
+// const searchBar = document.querySelector('[data-js="search-bar"]');
+
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formElements = event.target.elements;
+  console.log(formElements[0].value);
+  fetchCharacters(searchQuery);
+});
