@@ -45,6 +45,7 @@ async function fetchCharacters(page) {
     let info = result.info;
     let characters = result.results;
     maxPage = info.pages;
+    pagination.textContent = `${page} / ${maxPage} `;
     characters.forEach((character) => {
       const newCard = createCharacterCard(character);
       cardContainer.append(newCard);
@@ -59,5 +60,6 @@ searchBar.addEventListener("submit", (e) => {
 
   const formElements = e.target.elements;
   searchQuery = formElements[0].value;
-  fetchCharacters(searchQuery);
+  page = 1;
+  fetchCharacters(page, searchQuery);
 });
