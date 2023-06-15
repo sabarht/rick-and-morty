@@ -22,8 +22,8 @@ async function fetchCharacters() {
   const info = result.info;
   const characters = result.results;
   console.log(characters);
-  // characters.forEach((character) => {
-  //   createCharacterCard(character);
-  // });
+  characters.forEach((character) => {
+    createCharacterCard(character);
+  });
 }
 fetchCharacters();
