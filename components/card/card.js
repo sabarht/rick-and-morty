@@ -18,9 +18,7 @@ export function createCharacterCard(characters) {
     </dl>
   </div>
 </li>`;
-
-  const formContainer = document.getElementsByClassName("card-container");
-  formContainer.append(newCard);
-
+  const main = document.querySelector('[data-js="main"]');
+  main.append(newCard);
   //activateButtons();
 }
