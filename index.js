@@ -31,6 +31,16 @@ prevButton.addEventListener("click", () => {
   }
 });
 
+//searchBar
+searchBar.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formElements = e.target.elements;
+  searchQuery = formElements[0].value;
+  page = 1;
+  fetchCharacters(page, searchQuery);
+});
+
 fetchCharacters(page);
 async function fetchCharacters(page) {
   try {
@@ -39,8 +49,6 @@ async function fetchCharacters(page) {
       `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`
     );
 
-    console.log(response);
-    console.log(page);
     let result = await response.json();
     let info = result.info;
     let characters = result.results;
@@ -54,12 +62,3 @@ async function fetchCharacters(page) {
     console.error("Error fetching Data", error);
   }
 }
-///////
-searchBar.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const formElements = e.target.elements;
-  searchQuery = formElements[0].value;
-  page = 1;
-  fetchCharacters(page, searchQuery);
-});
